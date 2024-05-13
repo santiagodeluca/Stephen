@@ -53,7 +53,7 @@ testsEjfrecuencia = test [
     ]
 
 testsEjcifradoMasFrecuente = test [
-    cifradoMasFrecuente "taller" 3 ~?= ('o', 33.333336)
+    expectAnyTuplaAprox (cifradoMasFrecuente "taller" 3) [('o', 33.333336)]
     ]
 
 testsEjesDescifrado = test [
