@@ -25,27 +25,57 @@ allTests = test [
 
 
 testsEjesMinuscula = test [
-    esMinuscula 'd' ~?= True
+    esMinuscula 'd' ~?= True,
+    esMinuscula 'a' ~?= True,
+    esMinuscula 'z' ~?= True,
+    esMinuscula 'T' ~?= False,
+    esMinuscula 'A' ~?= False,
+    esMinuscula 'Z' ~?= False,
+    esMinuscula '!' ~?= False,
+    esMinuscula '8' ~?= False
     ]
 
 testsEjletraANatural = test [
-    letraANatural 'b' ~?= 1
+    letraANatural 'b' ~?= 1,
+    letraANatural 'a' ~?= 0,
+    letraANatural 'z' ~?= 25
     ]
 
 testsEjdesplazar = test [
-    desplazar 'a' 3 ~?= 'd'
+    desplazar 'a' 3 ~?= 'd',
+    desplazar 'b' 3 ~?= 'e',
+    desplazar 'z' 2 ~?= 'b',
+    desplazar 'a' 0 ~?= 'a',
+    desplazar 'a' 26 ~?= 'a',
+    desplazar 'A' 2 ~?= 'A',
+    desplazar ' ' 2 ~?= ' '
     ]
 
 testsEjcifrar = test [
-    cifrar "computacion" 3 ~?= "frpsxwdflrq"
+    cifrar "computacion" 3 ~?= "frpsxwdflrq",
+    cifrar "computacion" 0 ~?= "computacion",
+    cifrar "computacion" 26 ~?= "computacion",
+    cifrar "aaa" 27 ~?= "bbb",
+    cifrar "aaa" (-1) ~?= "zzz",
+    cifrar "" 7 ~?= "",
+    cifrar "computacion" (-26) ~?= "computacion"
     ]
 
 testsEjdescifrar = test [
-    descifrar "frpsxwdflrq" 3 ~?= "computacion"
+    descifrar "frpsxwdflrq" 3 ~?= "computacion",
+    descifrar "computacion" 0 ~?= "computacion",
+    descifrar "computacion" 26 ~?= "computacion",
+    descifrar "bbb" 27 ~?= "aaa",
+    descifrar "zzz" (-1) ~?= "aaa",
+    descifrar "" 7 ~?= "",
+    descifrar "computacion" (-26) ~?= "computacion"
     ]
 
 testsEjcifrarLista = test [
-    cifrarLista ["compu", "labo", "intro"] ~?= ["compu", "mbcp", "kpvtq"]
+    cifrarLista ["compu", "labo", "intro"] ~?= ["compu", "mbcp", "kpvtq"],
+    cifrarLista [] ~?= [],
+    cifrarLista ["compu"] ~?= ["compu"],
+    cifrarLista ["aaa", "zzz", "yyy"] ~?= ["aaa", "aaa", "aaa"]
     ]
 
 testsEjfrecuencia = test [

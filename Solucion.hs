@@ -6,11 +6,11 @@ import Data.Char
 
 
 -- Completar!
--- Nombre de grupo: {}
--- Integrante1: { DNI1,apellidoYNombre1}
--- Integrante2: { DNI2,apellidoYNombre2}
--- Integrante3: { DNI3,apellidoYNombre3}
--- Integrante4: { DNI4,apellidoYNombre4}
+-- Nombre de grupo: {Stephen Currificacion}
+-- Integrante1: { 45919293,De Luca Santiago Leonel}
+-- Integrante2: { 45478235,Aguilar Lautaro}
+-- Integrante3: { 44006697,Fritzler Nicolas Ezequiel}
+-- Integrante4: { 45073713,Di Bella Valentino}
 -- Integrantes que abandonaron la materia: {En caso que haya abandonado la materia algún
                         -- integrante, completar con los dni y apellidos, sino dejar vacío}
 
@@ -24,7 +24,8 @@ letraANatural a = (ord a) - (ord 'a')
 
 -- EJ 3
 desplazar :: Char -> Int -> Char
-desplazar a n | (letraANatural a) + n < 0 = chr ((letraANatural a) + n + ord 'a' + 26) 
+desplazar a n | not (esMinuscula a) = a 
+              | (letraANatural a) + n < 0 = chr ((letraANatural a) + n + ord 'a' + 26) 
               | (letraANatural a) + n <= 25 = chr ((letraANatural a) + n + ord 'a') 
               | otherwise = chr ((letraANatural a) + n + ord 'a' - 26) 
 
@@ -107,19 +108,42 @@ acortarClave :: String -> Int -> String
 acortarClave (x:xs) 0 = []
 acortarClave (x:xs) n = x:acortarClave xs (n - 1)
 
-
 -- EJ 12
 cifrarVigenere :: String -> String -> String
-cifrarVigenere _ _ = "kdueciirqdv"
+cifrarVigenere p c = desplazaVigenere p (expandirClave c (length p))
+
+desplazaVigenere :: String -> String -> String
+desplazaVigenere [] _ = []
+desplazaVigenere (x:xs) (y:ys) = desplazar x (letraANatural y):desplazaVigenere xs ys
 
 -- EJ 13
 descifrarVigenere :: String -> String -> String
-descifrarVigenere _ _ = "computacion"
+descifrarVigenere p c = cifrarVigenere p (invertir c)
+
+invertir :: String -> String
+invertir [] = []
+invertir (x:xs) = chr (letraANatural 'z' - letraANatural x + ord 'a' + 1):invertir xs
 
 -- EJ 14
 peorCifrado :: String -> [String] -> String
-peorCifrado _ _ = "asdef"
+peorCifrado _ [x] = x 
+peorCifrado p (x:y:xs) | distanciaSecuencias (cifrarVigenere p x) p >= distanciaSecuencias (cifrarVigenere p y) p = peorCifrado p (y:xs)
+                       | otherwise = peorCifrado p (x:xs)
+
+distanciaSecuencias :: String -> String -> Int
+distanciaSecuencias [] _ = 0
+distanciaSecuencias (x:xs) (y:ys) = absoluto (letraANatural x - letraANatural y) + distanciaSecuencias xs ys
+
+absoluto :: Int -> Int 
+absoluto x | x < 0 = (-x)
+           | otherwise = x
 
 -- EJ 15
 combinacionesVigenere :: [String] -> [String] -> String -> [(String, String)]
-combinacionesVigenere _ _ _ = [("hola", "b")]
+combinacionesVigenere [] _ _ = []
+combinacionesVigenere (x:xs) cl ci = encuentraCombinacion x cl ci ++ combinacionesVigenere xs cl ci
+
+encuentraCombinacion :: String -> [String] -> String -> [(String, String)]
+encuentraCombinacion _ [] _ = []
+encuentraCombinacion m (x:xs) c | cifrarVigenere m x == c = [(m, x)] ++ encuentraCombinacion m xs c
+                                | otherwise = encuentraCombinacion m xs c 
