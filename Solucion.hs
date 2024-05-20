@@ -16,15 +16,17 @@ import Data.Char
 
 -- EJ 1
 esMinuscula :: Char -> Bool
-esMinuscula a = ord a >= ord 'a' && ord a <= ord 'z'
+esMinuscula c = ord c >= ord 'a' && ord c <= ord 'z'
 
 -- EJ 2
 letraANatural :: Char -> Int
-letraANatural a = (ord a) - (ord 'a')
+letraANatural c = ord c - ord 'a'
 
 -- EJ 3
 desplazar :: Char -> Int -> Char
 desplazar a n | not (esMinuscula a) = a 
+              | n < -26 = desplazar a (n + 26)
+              | n > 26 = desplazar a (n - 26)
               | (letraANatural a) + n < 0 = chr ((letraANatural a) + n + ord 'a' + 26) 
               | (letraANatural a) + n <= 25 = chr ((letraANatural a) + n + ord 'a') 
               | otherwise = chr ((letraANatural a) + n + ord 'a' - 26) 
@@ -32,8 +34,7 @@ desplazar a n | not (esMinuscula a) = a
 -- EJ 4
 cifrar :: String -> Int -> String
 cifrar [] _ = []
-cifrar (x:xs) n | esMinuscula x = desplazar x n:cifrar xs n 
-                | otherwise = x:cifrar xs n 
+cifrar (x:xs) n = desplazar x n:cifrar xs n 
 
 -- EJ 5
 descifrar :: String -> Int -> String
@@ -41,11 +42,11 @@ descifrar x n = cifrar x (-n)
 
 -- EJ 6
 cifrarLista :: [String] -> [String]
-cifrarLista x = cifrarPalabrasPosicion x x
+cifrarLista x = cifrarPalabrasPosicion x 0
 
-cifrarPalabrasPosicion :: [String] ->  [String] ->  [String]
+cifrarPalabrasPosicion :: [String] ->  Int ->  [String]
 cifrarPalabrasPosicion [] _ = []
-cifrarPalabrasPosicion (x:xs) y = cifrar x (length y - length (x:xs)):cifrarPalabrasPosicion xs y
+cifrarPalabrasPosicion (x:xs) n = cifrar x n:cifrarPalabrasPosicion xs (n + 1)
 
 -- EJ 7
 frecuencia :: String -> [Float]

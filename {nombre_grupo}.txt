@@ -1,9 +1,0 @@
-### Para entregar el TP, sólo un integrante del grupo debe completar este archivo y subirlo al campus
-Nombre de grupo: {Stephen Currificacion}
-repositorio: {Completar con el link al repositorio}
-commit: {Completar con el commit a tener en cuenta (no se revisan cambios posteriores)}
-Integrante1: { 45919293,De Luca Santiago Leonel}
-Integrante2: { 45478235,Aguilar Lautaro}
-Integrante3: { 44006697,Fritzler Nicolas Ezequiel}
-Integrante4: { 45073713,Di Bella Valentino}
-Integrantes que abandonaron la materia: {En caso que haya abandonado la materia algún integrante, completar con los dni y apellidos, sino dejar vacío}

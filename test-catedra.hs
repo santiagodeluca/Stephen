@@ -43,47 +43,63 @@ testsEjletraANatural = test [
 
 testsEjdesplazar = test [
     desplazar 'a' 3 ~?= 'd',
+    desplazar 'a' (-3) ~?= 'x',
     desplazar 'b' 3 ~?= 'e',
     desplazar 'z' 2 ~?= 'b',
     desplazar 'a' 0 ~?= 'a',
     desplazar 'a' 26 ~?= 'a',
+    desplazar 'a' 52 ~?= 'a',
+    desplazar 'a' (-52) ~?= 'a',
+    desplazar 'a' (-26) ~?= 'a',
     desplazar 'A' 2 ~?= 'A',
+    desplazar '!' 2 ~?= '!',
     desplazar ' ' 2 ~?= ' '
     ]
 
 testsEjcifrar = test [
     cifrar "computacion" 3 ~?= "frpsxwdflrq",
+    cifrar "computaciON" 3 ~?= "frpsxwdflON",
+    cifrar "computaci12" 3 ~?= "frpsxwdfl12",
+    cifrar "introduccion a la programacion" 3 ~?= "lqwurgxfflrq d od surjudpdflrq",
+    cifrar "abcdefghijklmnopqrstuvwxyz" 1 ~?= "bcdefghijklmnopqrstuvwxyza",
     cifrar "computacion" 0 ~?= "computacion",
     cifrar "computacion" 26 ~?= "computacion",
+    cifrar "computacion" 52 ~?= "computacion",
     cifrar "aaa" 27 ~?= "bbb",
-    cifrar "aaa" (-1) ~?= "zzz",
-    cifrar "" 7 ~?= "",
-    cifrar "computacion" (-26) ~?= "computacion"
+    cifrar "" 7 ~?= ""
     ]
 
 testsEjdescifrar = test [
     descifrar "frpsxwdflrq" 3 ~?= "computacion",
+    descifrar "frpsxwdflON" 3 ~?= "computaciON",
+    descifrar "frpsxwdfl12" 3 ~?= "computaci12",
+    descifrar "lqwurgxfflrq d od surjudpdflrq" 3 ~?= "introduccion a la programacion",
+    descifrar "bcdefghijklmnopqrstuvwxyza" 1 ~?= "abcdefghijklmnopqrstuvwxyz",
     descifrar "computacion" 0 ~?= "computacion",
     descifrar "computacion" 26 ~?= "computacion",
+    descifrar "computacion" 52 ~?= "computacion",
     descifrar "bbb" 27 ~?= "aaa",
-    descifrar "zzz" (-1) ~?= "aaa",
-    descifrar "" 7 ~?= "",
-    descifrar "computacion" (-26) ~?= "computacion"
+    descifrar "" 7 ~?= ""
     ]
 
 testsEjcifrarLista = test [
     cifrarLista ["compu", "labo", "intro"] ~?= ["compu", "mbcp", "kpvtq"],
     cifrarLista [] ~?= [],
+    cifrarLista [""] ~?= [""],
     cifrarLista ["compu"] ~?= ["compu"],
-    cifrarLista ["aaa", "zzz", "yyy"] ~?= ["aaa", "aaa", "aaa"]
+    cifrarLista ["aaa", "zzz", "yyy"] ~?= ["aaa", "aaa", "aaa"],
+    cifrarLista ["aaa1", "zzz2", "yyy3"] ~?= ["aaa1", "aaa2", "aaa3"],
+    cifrarLista ["Aaaa1", "Zzzz2", "Yyyy3"] ~?= ["Aaaa1", "Zaaa2", "Yaaa3"]
     ]
 
 testsEjfrecuencia = test [
     expectlistProximity (frecuencia "taller") [16.666668,0.0,0.0,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0,33.333336,0.0,0.0,0.0,0.0,0.0,16.666668,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0],
     expectlistProximity (frecuencia "a") [100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
     expectlistProximity (frecuencia "z") [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,100.0],
+    expectlistProximity (frecuencia "abc") [33.333333,33.333333,33.333333,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
     expectlistProximity (frecuencia "abcdefghijklmnopqrstuvwxyz") [3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537],
-    expectlistProximity (frecuencia "A") [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+    expectlistProximity (frecuencia "HOLA") [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
+    expectlistProximity (frecuencia "!465^%$") [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
     ]
 
 testsEjcifradoMasFrecuente = test [
@@ -91,29 +107,38 @@ testsEjcifradoMasFrecuente = test [
     expectAnyTuplaAprox (cifradoMasFrecuente "a" 1) [('b', 100.0)],
     expectAnyTuplaAprox (cifradoMasFrecuente "z" 1) [('a', 100.0)],
     expectAnyTuplaAprox (cifradoMasFrecuente "casa" 2) [('c', 50.0)],
+    expectAnyTuplaAprox (cifradoMasFrecuente "casa" (-2)) [('y', 50.0)],
+    expectAnyTuplaAprox (cifradoMasFrecuente "aabb" 1) [('b', 50.0), ('c', 50.0)],
+    expectAnyTuplaAprox (cifradoMasFrecuente "afk" 0) [('a', 33.333333), ('f', 33.333333), ('k', 33.333333)],
     expectAnyTuplaAprox (cifradoMasFrecuente "HOLAa432" 2) [('c', 100.0)]
     ]
 
 testsEjesDescifrado = test [
     esDescifrado "taller" "compu" ~?= False,
-    esDescifrado "aaa" "aaa" ~?= True,
-    esDescifrado "aaa" "zzz" ~?= True,
-    esDescifrado "abc" "bcd" ~?= True,
-    esDescifrado "zzz" "aaa" ~?= True,
     esDescifrado "AA" "aa" ~?= False,
     esDescifrado "45" "aa" ~?= False,
-    esDescifrado "hola" "holanda" ~?= False
+    esDescifrado "aa45" "aa" ~?= False,
+    esDescifrado "hola" "holanda" ~?= False,
+    esDescifrado "aaa" "aaa" ~?= True,
+    esDescifrado "aaa" "zzz" ~?= True,
+    esDescifrado "zzz" "aaa" ~?= True,
+    esDescifrado "abc" "xyz" ~?= True
     ]
 
 testsEjtodosLosDescifrados = test [
     todosLosDescifrados ["compu", "frpsx", "mywza"] ~?= [("compu", "frpsx"), ("frpsx", "compu")],
-    expectPermutacion (todosLosDescifrados ["aaa", "abc", "zzz"]) [("aaa", "zzz"), ("zzz", "aaa")],
+    expectPermutacion (todosLosDescifrados ["aaa", "abc", "zzz", "xyz"]) [("aaa", "zzz"), ("zzz", "aaa"), ("xyz", "abc"), ("abc", "xyz")],
+    expectPermutacion (todosLosDescifrados ["14t", "14r"]) [("14r", "14t"), ("14t", "14r")],
+    expectPermutacion (todosLosDescifrados ["aaa", "cbc"]) [],
+    expectPermutacion (todosLosDescifrados ["aaa", ""]) [],
     expectPermutacion (todosLosDescifrados ["aaa"]) [],
+    expectPermutacion (todosLosDescifrados [""]) [],
     expectPermutacion (todosLosDescifrados []) []
     ]
 
 testsEjexpandirClave = test [
     expandirClave "compu" 8 ~?= "compucom",
+    expandirClave "compu" 2 ~?= "co",
     expandirClave "compu" 1 ~?= "c",
     expandirClave "compu" 10 ~?= "compucompu",
     expandirClave "c" 8 ~?= "cccccccc"
@@ -142,15 +167,23 @@ testsEjdescifrarVigenere = test [
 testsEjpeorCifrado = test [
     peorCifrado "computacion" ["ip", "asdef", "ksy"] ~?= "asdef",
     peorCifrado "computacion" ["aaa", "bbb", "ccc"] ~?= "aaa",
+    peorCifrado "zzzzzzzzzzz" ["aaa", "bbb", "ccc"] ~?= "aaa",
+    peorCifrado "computacion" ["aaaazzzz", "bbbbaaaa"] ~?= "bbbbaaaa",
+    peorCifrado "casa" ["aaaazzzz", "bbbbaaaa"] ~?= "aaaazzzz",
     peorCifrado "computacion" ["aaa"] ~?= "aaa",
     peorCifrado "aaaa" ["abcd", "abce"] ~?= "abcd",
-    peorCifrado "" ["ccc", "aaa"] ~?= "aaa"
+    expectAny (peorCifrado "" ["ccc", "aaa"]) ["aaa", "ccc"]
     ]
 
 testsEjcombinacionesVigenere = test [
     combinacionesVigenere ["hola", "mundo"] ["a", "b"] "ipmb" ~?= [("hola", "b")],
     expectPermutacion (combinacionesVigenere ["aaa", "bbb"] ["a", "b"] "bbb") [("aaa", "b"), ("bbb", "a")],
+    expectPermutacion (combinacionesVigenere ["zaaz", "lool"] ["a", "b"] "abba") [("zaaz", "b")],
+    expectPermutacion (combinacionesVigenere ["axtm", "papo"] ["flaco", "charly"] "fito") [("axtm", "flaco")],
+    expectPermutacion (combinacionesVigenere ["uah trucxth", "queen"] ["zeppelin", "rolling"] "los beatles") [("uah trucxth", "rolling")],
     expectPermutacion (combinacionesVigenere [] [] "bbb") [],
+    expectPermutacion (combinacionesVigenere [""] ["aaa"] "") [("", "aaa")],
+    expectPermutacion (combinacionesVigenere [""] ["aaa"] "no") [],
     expectPermutacion (combinacionesVigenere ["aaa"] ["zz"] "bbb") []
     ]
 
