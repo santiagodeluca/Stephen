@@ -53,7 +53,8 @@ frecuencia x = buscaFreq x 0
 
 buscaFreq :: String -> Int -> [Float]
 buscaFreq x 26 = []
-buscaFreq x n = ((cantidadApariciones (chr (n + ord 'a')) x) * 100) / fromIntegral (cuentaMinusculas x):buscaFreq x (n + 1) 
+buscaFreq x n | cuentaMinusculas x == 0 = 0.0:buscaFreq x (n + 1)
+              | otherwise = ((cantidadApariciones (chr (n + ord 'a')) x) * 100) / fromIntegral (cuentaMinusculas x):buscaFreq x (n + 1) 
 
 cantidadApariciones :: Char -> String -> Float
 cantidadApariciones _ [] = 0 

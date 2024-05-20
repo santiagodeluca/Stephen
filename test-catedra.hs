@@ -79,45 +79,85 @@ testsEjcifrarLista = test [
     ]
 
 testsEjfrecuencia = test [
-    expectlistProximity (frecuencia "taller") [16.666668,0.0,0.0,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0,33.333336,0.0,0.0,0.0,0.0,0.0,16.666668,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0]
+    expectlistProximity (frecuencia "taller") [16.666668,0.0,0.0,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0,33.333336,0.0,0.0,0.0,0.0,0.0,16.666668,0.0,16.666668,0.0,0.0,0.0,0.0,0.0,0.0],
+    expectlistProximity (frecuencia "a") [100.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],
+    expectlistProximity (frecuencia "z") [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,100.0],
+    expectlistProximity (frecuencia "abcdefghijklmnopqrstuvwxyz") [3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537,3.8461537],
+    expectlistProximity (frecuencia "A") [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
     ]
 
 testsEjcifradoMasFrecuente = test [
-    expectAnyTuplaAprox (cifradoMasFrecuente "taller" 3) [('o', 33.333336)]
+    expectAnyTuplaAprox (cifradoMasFrecuente "taller" 3) [('o', 33.333336)],
+    expectAnyTuplaAprox (cifradoMasFrecuente "a" 1) [('b', 100.0)],
+    expectAnyTuplaAprox (cifradoMasFrecuente "z" 1) [('a', 100.0)],
+    expectAnyTuplaAprox (cifradoMasFrecuente "casa" 2) [('c', 50.0)],
+    expectAnyTuplaAprox (cifradoMasFrecuente "HOLAa432" 2) [('c', 100.0)]
     ]
 
 testsEjesDescifrado = test [
-    esDescifrado "taller" "compu" ~?= False
+    esDescifrado "taller" "compu" ~?= False,
+    esDescifrado "aaa" "aaa" ~?= True,
+    esDescifrado "aaa" "zzz" ~?= True,
+    esDescifrado "abc" "bcd" ~?= True,
+    esDescifrado "zzz" "aaa" ~?= True,
+    esDescifrado "AA" "aa" ~?= False,
+    esDescifrado "45" "aa" ~?= False,
+    esDescifrado "hola" "holanda" ~?= False
     ]
 
 testsEjtodosLosDescifrados = test [
-    todosLosDescifrados ["compu", "frpsx", "mywza"] ~?= [("compu", "frpsx"), ("frpsx", "compu")]
+    todosLosDescifrados ["compu", "frpsx", "mywza"] ~?= [("compu", "frpsx"), ("frpsx", "compu")],
+    expectPermutacion (todosLosDescifrados ["aaa", "abc", "zzz"]) [("aaa", "zzz"), ("zzz", "aaa")],
+    expectPermutacion (todosLosDescifrados ["aaa"]) [],
+    expectPermutacion (todosLosDescifrados []) []
     ]
 
 testsEjexpandirClave = test [
-    expandirClave "compu" 8 ~?= "compucom"
+    expandirClave "compu" 8 ~?= "compucom",
+    expandirClave "compu" 1 ~?= "c",
+    expandirClave "compu" 10 ~?= "compucompu",
+    expandirClave "c" 8 ~?= "cccccccc"
     ]
 
 testsEjcifrarVigenere = test [
-    cifrarVigenere "computacion" "ip" ~?= "kdueciirqdv"
+    cifrarVigenere "computacion" "ip" ~?= "kdueciirqdv",
+    cifrarVigenere "computacion" "a" ~?= "computacion",
+    cifrarVigenere "computacion" "aaaaa" ~?= "computacion",
+    cifrarVigenere "aaa" "b" ~?= "bbb",
+    cifrarVigenere "aaaaaa" "abc" ~?= "abcabc",
+    cifrarVigenere "xyz" "abcabc" ~?= "xzb",
+    cifrarVigenere "" "abcabc" ~?= ""
     ]
 
 testsEjdescifrarVigenere = test [
-    descifrarVigenere "kdueciirqdv" "ip" ~?= "computacion"
+    descifrarVigenere "kdueciirqdv" "ip" ~?= "computacion",
+    descifrarVigenere "computacion" "a" ~?= "computacion",
+    descifrarVigenere "computacion" "aaaaa" ~?= "computacion",
+    descifrarVigenere "bbb" "b" ~?= "aaa",
+    descifrarVigenere "abcabc" "abc" ~?= "aaaaaa",
+    descifrarVigenere "xzb" "abcabc" ~?= "xyz",
+    descifrarVigenere "" "abcabc" ~?= ""
     ]
 
 testsEjpeorCifrado = test [
-    peorCifrado "computacion" ["ip", "asdef", "ksy"] ~?= "asdef"
+    peorCifrado "computacion" ["ip", "asdef", "ksy"] ~?= "asdef",
+    peorCifrado "computacion" ["aaa", "bbb", "ccc"] ~?= "aaa",
+    peorCifrado "computacion" ["aaa"] ~?= "aaa",
+    peorCifrado "aaaa" ["abcd", "abce"] ~?= "abcd",
+    peorCifrado "" ["ccc", "aaa"] ~?= "aaa"
     ]
 
 testsEjcombinacionesVigenere = test [
-    combinacionesVigenere ["hola", "mundo"] ["a", "b"] "ipmb" ~?= [("hola", "b")]
+    combinacionesVigenere ["hola", "mundo"] ["a", "b"] "ipmb" ~?= [("hola", "b")],
+    expectPermutacion (combinacionesVigenere ["aaa", "bbb"] ["a", "b"] "bbb") [("aaa", "b"), ("bbb", "a")],
+    expectPermutacion (combinacionesVigenere [] [] "bbb") [],
+    expectPermutacion (combinacionesVigenere ["aaa"] ["zz"] "bbb") []
     ]
 
 -- Funciones útiles
 
 -- margetFloat(): Float
--- asegura: res es igual a 0.00001
+-- asegura: res es igual a 3.84615370001
 margenFloat = 0.00001
 
 -- expectAny (actual: a, expected: [a]): Test
