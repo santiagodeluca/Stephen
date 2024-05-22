@@ -1,7 +1,7 @@
 ### Para entregar el TP, sólo un integrante del grupo debe completar este archivo y subirlo al campus
 Nombre de grupo: {Stephen Currificacion}
-repositorio: {Completar con el link al repositorio}
-commit: {Completar con el commit a tener en cuenta (no se revisan cambios posteriores)}
+repositorio: {https://gitlab.com/stephen-currificacion/trabajo-practico-haskell-ip.git}
+commit: {}
 Integrante1: { 45919293,De Luca Santiago Leonel,santidelu510@gmail.com}
 Integrante2: { 45478235,Aguilar Lautaro,lautaroaguilar.c@gmail.com}
 Integrante3: { 44006697,Fritzler Nicolas Ezequiel,nicolasfritzler89@gmail.com}

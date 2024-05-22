@@ -3,7 +3,7 @@ import Solucion
 import Data.List
 -- No está permitido agregar nuevos imports.
 
-runCatedraTests = runTestTT allTests
+runPropiosTests = runTestTT allTests
 
 allTests = test [
     "esMinuscula" ~: testsEjesMinuscula,
@@ -53,7 +53,7 @@ testsEjdesplazar = test [
     "no desplaza porque es mayus" ~: desplazar 'A' 2 ~?= 'A',
     "no desplaza porque es numero" ~: desplazar '3' 2 ~?= '3',
     "no desplaza porque es simbolo" ~: desplazar '!' 2 ~?= '!',
-    "espacio" ~: desplazar ' ' 2 ~?= ' '
+    "no desplaza porque es espacio" ~: desplazar ' ' 2 ~?= ' '
     ]
 
 testsEjcifrar = test [
@@ -140,7 +140,8 @@ testsEjexpandirClave = test [
     "reduce" ~: expandirClave "compu" 2 ~?= "co",
     "reduce a uno" ~: expandirClave "compu" 1 ~?= "c",
     "duplica" ~: expandirClave "compu" 10 ~?= "compucompu",
-    "extiende una sola letra" ~: expandirClave "c" 8 ~?= "cccccccc"
+    "extiende una sola letra" ~: expandirClave "c" 8 ~?= "cccccccc",
+    "deja igual" ~: expandirClave "compu" 5 ~?= "compu"
     ]
 
 testsEjcifrarVigenere = test [
