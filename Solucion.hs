@@ -16,77 +16,77 @@ import Data.Char
 
 -- EJ 1
 esMinuscula :: Char -> Bool
-esMinuscula c = ord c >= ord 'a' && ord c <= ord 'z'
+esMinuscula caracter = ord caracter >= ord 'a' && ord caracter <= ord 'z'
 
 -- EJ 2
 letraANatural :: Char -> Int
-letraANatural c = ord c - ord 'a'
+letraANatural caracter = ord caracter - ord 'a'
 
 -- EJ 3
 desplazar :: Char -> Int -> Char
-desplazar a n | not (esMinuscula a) = a 
-              | n < -26 = desplazar a (n + 26)
-              | n > 26 = desplazar a (n - 26)
-              | (letraANatural a) + n < 0 = chr ((letraANatural a) + n + ord 'a' + 26) 
-              | (letraANatural a) + n <= 25 = chr ((letraANatural a) + n + ord 'a') 
-              | otherwise = chr ((letraANatural a) + n + ord 'a' - 26) 
+desplazar caracter numero | not (esMinuscula caracter) = caracter 
+                          | numero < -26 = desplazar caracter (numero + 26)
+                          | numero > 26 = desplazar caracter (numero - 26)
+                          | (letraANatural caracter) + numero < 0 = chr ((letraANatural caracter) + numero + ord 'a' + 26) 
+                          | (letraANatural caracter) + numero <= 25 = chr ((letraANatural caracter) + numero + ord 'a') 
+                          | otherwise = chr ((letraANatural caracter) + numero + ord 'a' - 26) 
 
 -- EJ 4
 cifrar :: String -> Int -> String
 cifrar [] _ = []
-cifrar (x:xs) n = desplazar x n:cifrar xs n 
+cifrar (caracter:palabraResto) numero = desplazar caracter numero:cifrar palabraResto numero 
 
 -- EJ 5
 descifrar :: String -> Int -> String
-descifrar x n = cifrar x (-n)
+descifrar palabra numero = cifrar palabra (-numero)
 
 -- EJ 6
 cifrarLista :: [String] -> [String]
-cifrarLista x = cifrarPalabrasPosicion x 0
+cifrarLista lista = cifrarPalabrasPosicion lista 0
 
 cifrarPalabrasPosicion :: [String] ->  Int ->  [String]
 cifrarPalabrasPosicion [] _ = []
-cifrarPalabrasPosicion (x:xs) n = cifrar x n:cifrarPalabrasPosicion xs (n + 1)
+cifrarPalabrasPosicion (palabra:listaResto) posicion = cifrar palabra posicion:cifrarPalabrasPosicion listaResto (posicion + 1)
 
 -- EJ 7
 frecuencia :: String -> [Float]
-frecuencia x = buscaFreq x 0
+frecuencia palabra = buscaFreq palabra 0
 
 buscaFreq :: String -> Int -> [Float]
-buscaFreq x 26 = []
-buscaFreq x n | cuentaMinusculas x == 0 = 0.0:buscaFreq x (n + 1)
-              | otherwise = ((cantidadApariciones (chr (n + ord 'a')) x) * 100) / fromIntegral (cuentaMinusculas x):buscaFreq x (n + 1) 
+buscaFreq palabra 26 = []
+buscaFreq palabra numeroletra | cuentaMinusculas palabra == 0 = 0.0:buscaFreq palabra (numeroletra + 1)
+                              | otherwise = ((cantidadApariciones (chr (numeroletra + ord 'a')) palabra) * 100) / fromIntegral (cuentaMinusculas palabra):buscaFreq palabra (numeroletra + 1) 
 
 cantidadApariciones :: Char -> String -> Float
 cantidadApariciones _ [] = 0 
-cantidadApariciones e (x:xs) | e == x = 1 + cantidadApariciones e xs
-                             | otherwise = cantidadApariciones e xs
+cantidadApariciones elemento (letra:palabraResto) | elemento == letra = 1 + cantidadApariciones elemento palabraResto
+                             | otherwise = cantidadApariciones elemento palabraResto
 
 cuentaMinusculas :: String -> Int
 cuentaMinusculas [] = 0
-cuentaMinusculas (x:xs) | esMinuscula x = 1 + cuentaMinusculas xs
-                        | otherwise = cuentaMinusculas xs
+cuentaMinusculas (caracter:palabraResto) | esMinuscula caracter = 1 + cuentaMinusculas palabraResto
+                                         | otherwise = cuentaMinusculas palabraResto
 
 -- Ej 8
 cifradoMasFrecuente :: String -> Int -> (Char, Float)
-cifradoMasFrecuente x n = letraMasFreq (frecuencia (cifrar x n)) 0 
+cifradoMasFrecuente palabra numero = letraMasFreq (frecuencia (cifrar palabra numero)) 0 
 
 letraMasFreq :: [Float] -> Int -> (Char, Float)
-letraMasFreq (x:xs) n | x == maximo (x:xs) = (chr (n + ord 'a'), x)
-                      | otherwise = letraMasFreq xs (n + 1)
+letraMasFreq (frecuencia:frecuenciaResto) numero | frecuencia == maximo (frecuencia:frecuenciaResto) = (chr (numero + ord 'a'), frecuencia)
+                                                 | otherwise = letraMasFreq frecuenciaResto (numero + 1)
 
 maximo :: (Num a, Ord a) => [a] -> a
-maximo [x] = x
-maximo (x:y:xs) | x >= y = maximo (x:xs)
-                | otherwise = maximo (y:xs)
+maximo [elemento] = elemento
+maximo (elem1:elem2:elementosResto) | elem1 >= elem2 = maximo (elem1:elementosResto)
+                                    | otherwise = maximo (elem2:elementosResto)
 
 -- EJ 9
 esDescifrado :: String -> String -> Bool
-esDescifrado x y = comparaPosiblesCifrados x y 0
+esDescifrado palab1 palab2 = comparaPosiblesCifrados palab1 palab2 0
 
 comparaPosiblesCifrados :: String -> String -> Int -> Bool
 comparaPosiblesCifrados _ _ 26 = False
-comparaPosiblesCifrados x y n = cifrar x n == y || comparaPosiblesCifrados x y (n + 1) 
+comparaPosiblesCifrados palab1 palab2 numeroPosibleCif = cifrar palab1 numeroPosibleCif == palab2 || comparaPosiblesCifrados palab1 palab2 (numeroPosibleCif + 1) 
 
 -- EJ 10
 todosLosDescifrados :: [String] -> [(String, String)]

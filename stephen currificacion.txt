@@ -2,8 +2,8 @@
 Nombre de grupo: {Stephen Currificacion}
 repositorio: {Completar con el link al repositorio}
 commit: {Completar con el commit a tener en cuenta (no se revisan cambios posteriores)}
-Integrante1: { 45919293,De Luca Santiago Leonel}
-Integrante2: { 45478235,Aguilar Lautaro}
-Integrante3: { 44006697,Fritzler Nicolas Ezequiel}
-Integrante4: { 45073713,Di Bella Valentino}
-Integrantes que abandonaron la materia: {En caso que haya abandonado la materia algún integrante, completar con los dni y apellidos, sino dejar vacío}
+Integrante1: { 45919293,De Luca Santiago Leonel,santidelu510@gmail.com}
+Integrante2: { 45478235,Aguilar Lautaro,lautaroaguilar.c@gmail.com}
+Integrante3: { 44006697,Fritzler Nicolas Ezequiel,nicolasfritzler89@gmail.com}
+Integrante4: { 45073713,Di Bella Valentino,valentdb13@gmail.com}
+Integrantes que abandonaron la materia: {}
